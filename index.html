@@ -30,14 +30,14 @@ body {
 }
 
 /* ── SCREENS ── */
-.screen { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: flex-start; padding: 32px 16px; }
+.screen { display: none; min-height: 100vh; flex-direction: column; align-items: center; justify-content: flex-start; padding: 16px 16px; }
 .screen.active { display: flex; }
 #s-home, #s-join, #s-waiting, #s-waiting-student, #s-results-student { justify-content: center; }
 
 /* ── LOGO ── */
-.logo-wrap { background: white; border-radius: 12px; padding: 12px 28px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
-.logo-wrap img { height: 48px; display: block; }
-.logo-sm img { height: 36px; }
+.logo-wrap { background: white; border-radius: 12px; padding: 8px 20px; margin-bottom: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.25); }
+.logo-wrap img { height: 36px; display: block; }
+.logo-sm img { height: 28px; }
 
 /* ── HOME ── */
 #s-home { text-align: center; gap: 0; }
@@ -85,19 +85,20 @@ body {
 .back-link:hover { opacity: 0.8; }
 
 /* ── LOBBY (INSTRUCTOR) ── */
-#s-lobby { gap: 20px; max-width: 680px; width: 100%; }
-.lobby-card { background: var(--cream); border-radius: 16px; padding: 28px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
-.lobby-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+#s-lobby { gap: 10px; max-width: 780px; width: 100%; }
+.lobby-card { background: var(--cream); border-radius: 16px; padding: 16px 20px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.lobby-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 6px; }
 .lobby-status { font-family: var(--ff-mono); font-size: 16px; color: var(--green); letter-spacing: 2px; display: flex; align-items: center; gap: 6px; }
 .lobby-status::before { content:''; width:8px; height:8px; border-radius:50%; background: var(--green); display:inline-block; animation: pulse 1.5s ease-in-out infinite; }
 @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 .player-count { font-size: 18px; color: var(--mgray); }
-.room-code-box { text-align: center; background: var(--navy); border-radius: 12px; padding: 20px; margin-bottom: 20px; display: flex; flex-direction: column; align-items: center; }
-.room-code-label { font-family: var(--ff-mono); font-size: 16px; color: var(--mgray); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
-.room-code { font-family: var(--ff-mono); font-size: clamp(36px, 10vw, 64px); font-weight: 900; color: var(--gold); letter-spacing: 12px; }
-.room-code-sub { font-size: 16px; color: rgba(255,255,255,0.4); margin-top: 6px; }
-.qr-hint { font-size: 16px; color: var(--mgray); margin-top: 6px; }
-.player-list { min-height: 80px; max-height: 200px; overflow-y: auto; margin-bottom: 20px; }
+.room-code-box { background: var(--navy); border-radius: 12px; padding: 14px 16px; margin-bottom: 12px; display: flex; flex-direction: row; align-items: center; gap: 20px; }
+.room-code-left { display: flex; flex-direction: column; align-items: center; flex: 1; }
+.room-code-label { font-family: var(--ff-mono); font-size: 14px; color: var(--mgray); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+.room-code { font-family: var(--ff-mono); font-size: clamp(32px, 8vw, 52px); font-weight: 900; color: var(--gold); letter-spacing: 10px; }
+.room-code-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-top: 4px; word-break: break-all; text-align: center; }
+.qr-hint { font-size: 14px; color: var(--mgray); margin-top: 4px; text-align: center; }
+.player-list { min-height: 40px; max-height: 80px; overflow-y: auto; margin-bottom: 10px; }
 .player-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(14,124,123,0.12); border: 1px solid rgba(14,124,123,0.3); border-radius: 20px; padding: 5px 12px; font-size: 18px; color: var(--navy); margin: 4px; animation: popIn .3s ease; }
 @keyframes popIn { from{opacity:0;transform:scale(.7);} to{opacity:1;transform:scale(1);} }
 .player-waiting { color: var(--mgray); font-size: 18px; font-style: italic; }
@@ -321,11 +322,13 @@ body {
       </div>
     </div>
     <div class="room-code-box">
-      <div class="room-code-label">Room Code — students enter this</div>
-      <div class="room-code" id="room-code-display">----</div>
-      <div id="qr-url-display" style="font-size:16px;color:rgba(255,255,255,0.5);margin:6px 0 14px;word-break:break-all;padding:0 10px;"></div>
+      <div class="room-code-left">
+        <div class="room-code-label">Room Code — students enter this</div>
+        <div class="room-code" id="room-code-display">----</div>
+        <div id="qr-url-display" class="room-code-sub"></div>
+        <div class="qr-hint">Students scan with phone camera to join</div>
+      </div>
       <div id="qr-container"></div>
-      <div class="qr-hint">Students scan with phone camera to join</div>
     </div>
     <div class="player-list" id="player-list">
       <div class="player-waiting">Waiting...</div>
@@ -682,14 +685,13 @@ function generateQR(code) {
   document.getElementById('qr-url-display').textContent = joinUrl;
   const container = document.getElementById('qr-container');
   container.innerHTML = '';
-  container.style.cssText = 'display:flex;align-items:center;justify-content:center;background:white;padding:14px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);margin:10px auto;width:228px;height:228px;';
+  container.style.cssText = 'display:flex;align-items:center;justify-content:center;background:white;padding:10px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);width:160px;height:160px;flex-shrink:0;';
   const img = document.createElement('img');
-  img.width = 200;
-  img.height = 200;
+  img.width = 140;
+  img.height = 140;
   img.style.display = 'block';
   img.alt = 'Scan to join';
-  // Pure black on white — maximum phone camera compatibility, larger size
-  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&color=000000&bgcolor=ffffff&qzone=2&data=' + encodeURIComponent(joinUrl);
+  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&color=000000&bgcolor=ffffff&qzone=2&data=' + encodeURIComponent(joinUrl);
   container.appendChild(img);
 }
 
