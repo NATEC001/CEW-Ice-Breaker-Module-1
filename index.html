@@ -685,13 +685,13 @@ function generateQR(code) {
   document.getElementById('qr-url-display').textContent = joinUrl;
   const container = document.getElementById('qr-container');
   container.innerHTML = '';
-  container.style.cssText = 'display:flex;align-items:center;justify-content:center;background:white;padding:10px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);width:160px;height:160px;flex-shrink:0;';
+  container.style.cssText = 'display:flex;align-items:center;justify-content:center;background:white;padding:10px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.3);width:190px;height:190px;flex-shrink:0;';
   const img = document.createElement('img');
-  img.width = 140;
-  img.height = 140;
+  img.width = 170;
+  img.height = 170;
   img.style.display = 'block';
   img.alt = 'Scan to join';
-  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=140x140&color=000000&bgcolor=ffffff&qzone=2&data=' + encodeURIComponent(joinUrl);
+  img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=170x170&color=000000&bgcolor=ffffff&qzone=2&data=' + encodeURIComponent(joinUrl);
   container.appendChild(img);
 }
 
